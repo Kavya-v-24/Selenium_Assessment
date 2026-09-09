@@ -3,6 +3,7 @@ package Assessments;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -31,6 +32,7 @@ public class Day2_TestCase3 {
 		Thread.sleep(2000);
 		//clicking on add to cart button
 		cart.click();
+		Thread.sleep(2000);
 		//clicking on shopping cart link
 		driver.findElement(By.xpath("//span[text()='Shopping cart']")).click();
 		//storing removecheckbox webelement in rcb
@@ -43,15 +45,26 @@ public class Day2_TestCase3 {
 		System.out.println(rcb.getRect().getX());
 		System.out.println(rcb.getRect().getY());
 		
-		//identify apply coupon button
-		 WebElement coupon = driver.findElement(By.name("applydiscountcouponcode"));
-		 //clicking on coupon button
-		coupon.click();
-		//identify alert message
-		WebElement alert = driver.findElement(By.xpath("//div[@class=\"message\"]"));
-		Thread.sleep(2000);
-		//checking whether alert is displayed or not
-		System.out.println(alert.isDisplayed());
+		
+		//identify alert message webelement and storing in a list
+		List<WebElement> alerts = driver.findElements(By.xpath("//div[@class=\"message\"]"));
+		//checking size of list if >0, print whether first alert message is displayed or not
+		if(alerts.size()>0)
+		{
+			System.out.println(alerts.get(0).isDisplayed());
+		}
+		else
+		{
+			System.out.println("alert message is not displayed before clicking apply coupon");
+		}
+		
+		
+		//identify apply coupon button clicking on it
+		  driver.findElement(By.name("applydiscountcouponcode")).click();
+		
+		//identify alert message and checking whether displaying or not
+		System.out.println(driver.findElement(By.xpath("//div[@class=\"message\"]")).isDisplayed());
+		
 		
 		//identify laptop img and taking laptop screenshot
 		WebElement img = driver.findElement(By.xpath("(//img[@alt=\"Picture of 14.1-inch Laptop\"])[2]"));
